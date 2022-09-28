@@ -1,5 +1,6 @@
 package novi.higherlower;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class HigherLowerGame {
@@ -11,17 +12,40 @@ public class HigherLowerGame {
     }
 
     public void playGame() {
-        gameIsRunning = true;
 
         // Here you should generate the number to guess
+        Random random = new Random();
+        //    Het spel kiest een willekeurig nummer tussen 0 en 100 dat geraden moet worden.
+        int randomNumber = random.nextInt(1,101);
+        //        Het spel zet het aantal gespeelde beurten op 0
+        int numTurns = 0;
+        int guess;
 
-        while (gameIsRunning) {
-            System.out.println("Make a guess");
+        do {
+            numTurns++;
+            System.out.println("Guss a number between 1 and 100: ");
+            while (!inputScanner.hasNextInt()) {
+                System.out.println("Dat is geen geldig cijfer!");
+                inputScanner.next(); // belangrijk!!
+            }
+            guess = inputScanner.nextInt();
 
-            var input = inputScanner.nextLine();
-            System.out.printf("You typed: %s\n", input);
-
-            // Check if the guess is correct, if so end the game
-        }
+            System.out.printf("You guessed: %s \n", guess);
+            if (guess > randomNumber) {
+                System.out.println("That number is too high!");
+            } else if (guess < randomNumber) {
+                System.out.println("That number is too low!");
+            } else System.out.printf("Correct! You guessed the number in %s turns.", numTurns);
+        } while (guess != randomNumber);
     }
 }
+//
+//    De speler start het spel (je start de applicatie door het starten van de ‘main’ methode)
+//    Het spel kiest een willekeurig nummer tussen 0 en 100 dat geraden moet worden.
+//        Het spel zet het aantal gespeelde beurten op 0
+//        Het spel print de regel ‘Make a guess’
+//        De speler raadt een nummer
+//        Het spel hoogt het aantal gespeelde beurten op met 1
+//        Was het nummer te hoog? Het spel print de regel `That number is too high!` (terug naar stap 4)
+//        Was het nummer te laag? Het spel print de regel `That number is too low!` (terug naar stap 4)
+//        Komt het nummer overeen? Het spel print de regel `Correct! You guessed the number in x turns` waarbij x het aantal gespeelde beurten is. (het spel wordt gestopt)
