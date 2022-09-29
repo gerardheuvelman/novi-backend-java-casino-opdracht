@@ -153,7 +153,6 @@ private void determineWinners() {
             }
         }
 
-
     }
 
     private static void printGameState() {
