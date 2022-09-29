@@ -1,17 +1,22 @@
 package novi.higherlower;
 
+import novi.Playable;
+
 import java.util.Random;
 import java.util.Scanner;
 
-public class HigherLowerGame {
-    private Scanner inputScanner;
-    private boolean gameIsRunning;
+public class HigherLowerGame implements Playable {
 
-    public HigherLowerGame(Scanner inputScanner) {
-        this.inputScanner = inputScanner;
+    private Scanner scanner;
+    private boolean gameIsRunning = false;
+
+
+    public HigherLowerGame(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     public void playGame() {
+        gameIsRunning = true;
 
         // Here you should generate the number to guess
         Random random = new Random();
@@ -21,22 +26,25 @@ public class HigherLowerGame {
         int numTurns = 0;
         int guess;
 
-        do {
+        while (gameIsRunning) {
             numTurns++;
             System.out.println("Guss a number between 1 and 100: ");
-            while (!inputScanner.hasNextInt()) {
+            while (!scanner.hasNextInt()) {
                 System.out.println("Dat is geen geldig cijfer!");
-                inputScanner.next(); // belangrijk!!
+                scanner.next(); // belangrijk!!
             }
-            guess = inputScanner.nextInt();
+            guess = scanner.nextInt();
 
             System.out.printf("You guessed: %s \n", guess);
             if (guess > randomNumber) {
                 System.out.println("That number is too high!");
             } else if (guess < randomNumber) {
                 System.out.println("That number is too low!");
-            } else System.out.printf("Correct! You guessed the number in %s turns.", numTurns);
-        } while (guess != randomNumber);
+            } else {
+                System.out.printf("Correct! You guessed the number in %s turns.", numTurns);
+                gameIsRunning = false;
+            }
+        }
     }
 }
 //
